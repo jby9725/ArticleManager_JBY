@@ -9,6 +9,7 @@ public class App {
         System.out.println("== 프로그램 시작 ==");
 
         articleController.makeTestData();
+        memberController.makeTestData();
 
         while (true) {
             System.out.print("명령어) ");
@@ -19,13 +20,22 @@ public class App {
                 continue;
             }
             if (cmd.equals("exit")) {
+                System.out.println("==프로그램 종료==");
                 break;
             }
+
+            if (cmd.equals("member add")) {
+                int state = memberController.addMember();
+
+                continue;
+            }
+//            else if(cmd.equals("member remove")){
+//                memberController.removeMember();
+//            }
 
             if (cmd.equals("article write")) {
 
                 articleController.write();
-
 
             } else if (cmd.startsWith("article list")) {
 
@@ -35,7 +45,6 @@ public class App {
 
                 articleController.detail(cmd);
 
-
             } else if (cmd.startsWith("article delete")) {
 
                 articleController.delete(cmd);
@@ -44,13 +53,12 @@ public class App {
 
                 articleController.modify(cmd);
 
-
             } else {
                 System.out.println("사용할 수 없는 명령어입니다");
             }
 
         }
-        System.out.println("==프로그램 종료==");
+
     }
 
 }
