@@ -1,14 +1,45 @@
-package org.koreait;
+package org.koreait.controller;
+
+import org.koreait.Container;
+import org.koreait.dto.Article;
+import org.koreait.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArticleController {
+public class ArticleController extends Controller {
 
-    static int lastArticleId = 0;
-    static List<Article> articles = new ArrayList<>();
+    private int lastArticleId = 0;
+    private List<Article> articles = new ArrayList<>();
+    private String cmd;
 
-    public void write() {
+    @Override
+    public void doAction(String cmd, String actionMethodName) {
+        this.cmd = cmd;
+
+        switch (actionMethodName) {
+            case "write":
+                write();
+                break;
+            case "list":
+                list(cmd);
+                break;
+            case "detail":
+                detail(cmd);
+                break;
+            case "delete":
+                delete(cmd);
+                break;
+            case "modify":
+                modify(cmd);
+                break;
+            default:
+                System.out.println("Unknown action method: " + actionMethodName);
+                break;
+        }
+    }
+
+    private void write() {
         System.out.println("== 게시글 작성 ==");
 
         int id = ++lastArticleId;
@@ -25,7 +56,7 @@ public class ArticleController {
 
     }
 
-    public void delete(String cmd) {
+    private void delete(String cmd) {
         System.out.println("== 게시글 삭제 ==");
 
         int id = Integer.parseInt(cmd.split(" ")[2]);
@@ -39,7 +70,7 @@ public class ArticleController {
         System.out.println(id + "번 게시글이 삭제되었습니다");
     }
 
-    public void modify(String cmd) {
+    private void modify(String cmd) {
         System.out.println("== 게시글 수정 ==");
 
         int id = Integer.parseInt(cmd.split(" ")[2]);
@@ -59,7 +90,7 @@ public class ArticleController {
         System.out.println(id + "번 게시글이 수정되었습니다");
     }
 
-    public void list(String cmd) {
+    private void list(String cmd) {
         if (cmd.split(" ").length > 2 && !cmd.split(" ")[2].isEmpty()) { // 안 비어있으면
             list_selected(cmd.split(" ")[2].trim());
         } else {
@@ -111,7 +142,7 @@ public class ArticleController {
         }
     }
 
-    public void detail(String cmd) {
+    private void detail(String cmd) {
         System.out.println("== 게시글 상세보기 ==");
 
         int id = Integer.parseInt(cmd.split(" ")[2]);

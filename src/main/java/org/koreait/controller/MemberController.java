@@ -1,9 +1,13 @@
-package org.koreait;
+package org.koreait.controller;
+
+import org.koreait.Container;
+import org.koreait.dto.Member;
+import org.koreait.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MemberController {
+public class MemberController extends Controller {
     private List<Member> members;
     private int lastMemberID;
 
@@ -12,6 +16,8 @@ public class MemberController {
     private String nowLoginId;
     private boolean loginState;
 
+    private String cmd;
+
     public MemberController() {
         members = new ArrayList<Member>();
         loginId_DB = new ArrayList<>();
@@ -19,7 +25,26 @@ public class MemberController {
         loginState = false;
     }
 
-    public void joinMember() { // String loginId, String loginPw, String nickName
+    @Override
+    public void doAction(String cmd, String actionMethodName) {
+        this.cmd = cmd;
+        switch (actionMethodName) {
+            case "join":
+                join();
+                break;
+            case "login":
+                login();
+                break;
+            case "logout":
+                logout();
+                break;
+            default:
+                System.out.println("명령어 확인 (actionMethodName) 오류");
+                break;
+        }
+    }
+
+    private void join() { // String loginId, String loginPw, String nickName
         String loginId = "";
         String loginPw = "";
         String nickName = "";
@@ -47,7 +72,7 @@ public class MemberController {
             System.out.print("입력했던 비밀번호를 다시 입력해주세요. : ");
             re_loginPw = Container.getScanner().nextLine();
 
-            if(!re_loginPw.equals(loginPw)) {
+            if (!re_loginPw.equals(loginPw)) {
                 System.out.println("비밀번호를 다시 처음부터 입력해주세요.");
                 continue;
             }
@@ -86,7 +111,7 @@ public class MemberController {
         return true;
     }
 
-    public void removeMember() {
+    private void remove() {
         String loginId = "";
         String loginPw = "";
 
@@ -106,7 +131,7 @@ public class MemberController {
         }
     }
 
-    public void loginMember() {
+    private void login() {
         String loginId = "";
         String loginPw = "";
 
@@ -131,7 +156,7 @@ public class MemberController {
         System.out.println("해당 정보를 가지고 있는 회원은 없습니다.");
     }
 
-    public void logoutMember() {
+    private void logout() {
         if (!loginState) {
             System.out.println("현재 로그인 중인 계정이 없습니다.");
         } else {

@@ -1,7 +1,7 @@
-package org.koreait;
+package org.koreait.dto;
 
 
-class Article {
+public class Article {
     private int id;
     private String regDate;
     private String updateDate;
