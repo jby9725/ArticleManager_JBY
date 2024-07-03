@@ -19,7 +19,7 @@ public class MemberController {
         loginState = false;
     }
 
-    public int joinMember() { // String loginId, String loginPw, String nickName
+    public void joinMember() { // String loginId, String loginPw, String nickName
         String loginId = "";
         String loginPw = "";
         String nickName = "";
@@ -66,10 +66,10 @@ public class MemberController {
 
             System.out.printf("%d번 회원이 가입되었습니다.\n", lastMemberID);
             System.out.println("== 회원 가입 완료 ==");
-            return 0;
+            return;
         } else {
             System.out.println("비밀번호 재입력 오류");
-            return -1; // 비밀번호 재입력 오류
+            return; // 비밀번호 재입력 오류
         }
 
     }

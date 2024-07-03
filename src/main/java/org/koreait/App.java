@@ -2,8 +2,8 @@ package org.koreait;
 
 public class App {
 
-    static ArticleController articleController = new ArticleController();
-    static MemberController memberController = new MemberController();
+    MemberController memberController = new MemberController();
+    ArticleController articleController = new ArticleController();
 
     public void run() {
         System.out.println("== 프로그램 시작 ==");
@@ -27,7 +27,7 @@ public class App {
 
             if (cmd.equals("member join")) {
 
-                int state = memberController.joinMember();
+                memberController.joinMember();
 
             } else if (cmd.equals("member login")) {
 
