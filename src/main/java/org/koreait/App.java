@@ -14,26 +14,30 @@ public class App {
         while (true) {
             System.out.print("명령어) ");
             String cmd = Container.getScanner().nextLine().trim();
+            // CommendParser commendParser = new CommendParser(cmd); // 아직 필요 없다.
 
             if (cmd.isEmpty()) {
                 System.out.println("명령어를 입력하세요");
                 continue;
             }
             if (cmd.equals("exit")) {
-                System.out.println("==프로그램 종료==");
+                System.out.println("== 프로그램 종료 ==");
                 break;
             }
 
-            if (cmd.equals("member add")) {
-                int state = memberController.addMember();
+            if (cmd.equals("member join")) {
 
-                continue;
-            }
-//            else if(cmd.equals("member remove")){
-//                memberController.removeMember();
-//            }
+                int state = memberController.joinMember();
 
-            if (cmd.equals("article write")) {
+            } else if (cmd.equals("member login")) {
+
+                memberController.loginMember();
+
+            } else if (cmd.equals("member logout")) {
+
+                memberController.logoutMember();
+
+            } else if (cmd.equals("article write")) {
 
                 articleController.write();
 
