@@ -1,6 +1,6 @@
 package org.koreait.controller;
 
-import org.koreait.Container;
+import org.koreait.ArticleManager.Container;
 import org.koreait.dto.Member;
 import org.koreait.util.Util;
 
@@ -19,7 +19,7 @@ public class MemberController extends Controller {
     private String cmd;
 
     public MemberController() {
-        members = new ArrayList<Member>();
+        members = Container.memberDao.members;
         loginId_DB = new ArrayList<>();
         lastMemberID = 0;
         nowLoginMember = null;

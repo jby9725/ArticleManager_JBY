@@ -1,6 +1,6 @@
 package org.koreait.controller;
 
-import org.koreait.Container;
+import org.koreait.ArticleManager.Container;
 import org.koreait.dto.Article;
 import org.koreait.util.Util;
 
@@ -14,7 +14,7 @@ public class ArticleController extends Controller {
     private String cmd;
 
     public ArticleController() {
-        articles = new ArrayList<>();
+        articles = Container.articleDao.articles;
     }
 
     @Override
@@ -46,10 +46,6 @@ public class ArticleController extends Controller {
     private void write() {
         System.out.println("== 게시글 작성 ==");
 
-//        if (User.getUser() == null) {
-//            System.out.println("로그인을 해야만 게시글을 작성할 수 있습니다.");
-//            return;
-//        }
         int id = ++lastArticleId;
         String regDate = Util.getNow();
         String updateDate = regDate;
@@ -65,11 +61,6 @@ public class ArticleController extends Controller {
 
     private void delete(String cmd) {
         System.out.println("== 게시글 삭제 ==");
-
-//        if (User.getUser() == null) {
-//            System.out.println("로그인해야만 게시글을 삭제할 수 있습니다.");
-//            return;
-//        }
 
         int id = Integer.parseInt(cmd.split(" ")[2]);
         Article foundArticle = found_article(id);
@@ -89,11 +80,6 @@ public class ArticleController extends Controller {
 
     private void modify(String cmd) {
         System.out.println("== 게시글 수정 ==");
-
-//        if (User.getUser() == null) {
-//            System.out.println("로그인해야만 게시글을 수정할 수 있습니다.");
-//            return;
-//        }
 
         int id = -1;
         try {
@@ -139,7 +125,7 @@ public class ArticleController extends Controller {
     private void list_all() {
         System.out.println("== 게시글 목록 ==");
 
-        if (articles.size() == 0) {
+        if (articles.isEmpty()) {
             System.out.println("게시글이 아무것도 없어요");
         } else {
             System.out.println("  번호   /    작성자   /    날짜   /   제목   /   내용   ");
