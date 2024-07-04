@@ -4,7 +4,11 @@ import org.koreait.dto.Member;
 
 public class User {
 
-    private static Member user = null;
+    private static Member user;
+
+    public User (){
+        user = null;
+    }
 
     public static Member getUser() {
         return user;

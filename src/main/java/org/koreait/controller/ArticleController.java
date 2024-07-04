@@ -40,7 +40,7 @@ public class ArticleController extends Controller {
                 modify(cmd);
                 break;
             default:
-                System.out.println("Unknown action method: " + actionMethodName);
+                System.out.println("Unknown Action Method: " + actionMethodName);
                 break;
         }
     }
@@ -48,10 +48,10 @@ public class ArticleController extends Controller {
     private void write() {
         System.out.println("== 게시글 작성 ==");
 
-        if (User.getUser() == null) {
-            System.out.println("로그인을 해야만 게시글을 작성할 수 있습니다.");
-            return;
-        }
+//        if (User.getUser() == null) {
+//            System.out.println("로그인을 해야만 게시글을 작성할 수 있습니다.");
+//            return;
+//        }
         int id = ++lastArticleId;
         String regDate = Util.getNow();
         String updateDate = regDate;
@@ -60,7 +60,7 @@ public class ArticleController extends Controller {
         System.out.print("내용 : ");
         String body = Container.getScanner().nextLine();
 
-        Article article = new Article(id, regDate, updateDate, title, body, User.getUser().getLoginId());
+        Article article = new Article(id, regDate, updateDate, title, body, User.getUser().getLoginId(), User.getUser().getNickName());
         articles.add(article);
         System.out.println(id + "번 글이 생성되었습니다");
     }
@@ -68,10 +68,10 @@ public class ArticleController extends Controller {
     private void delete(String cmd) {
         System.out.println("== 게시글 삭제 ==");
 
-        if (User.getUser() == null) {
-            System.out.println("로그인해야만 게시글을 삭제할 수 있습니다.");
-            return;
-        }
+//        if (User.getUser() == null) {
+//            System.out.println("로그인해야만 게시글을 삭제할 수 있습니다.");
+//            return;
+//        }
 
         int id = Integer.parseInt(cmd.split(" ")[2]);
         Article foundArticle = found_article(id);
@@ -81,7 +81,7 @@ public class ArticleController extends Controller {
             return;
         }
 
-        if (foundArticle.getAuthor().equals(User.getUser().getLoginId())) {
+        if (foundArticle.getAuthor_id().equals(User.getUser().getLoginId())) {
             articles.remove(foundArticle);
             System.out.println(id + "번 게시글이 삭제되었습니다");
         } else {
@@ -92,10 +92,10 @@ public class ArticleController extends Controller {
     private void modify(String cmd) {
         System.out.println("== 게시글 수정 ==");
 
-        if (User.getUser() == null) {
-            System.out.println("로그인해야만 게시글을 수정할 수 있습니다.");
-            return;
-        }
+//        if (User.getUser() == null) {
+//            System.out.println("로그인해야만 게시글을 수정할 수 있습니다.");
+//            return;
+//        }
 
         int id = -1;
         try {
@@ -112,7 +112,7 @@ public class ArticleController extends Controller {
             return;
         }
 
-        if (foundArticle.getAuthor().equals(User.getUser().getLoginId())) {
+        if (foundArticle.getAuthor_id().equals(User.getUser().getLoginId())) {
             System.out.println("기존 제목 : " + foundArticle.getTitle());
             System.out.println("기존 내용 : " + foundArticle.getBody());
             System.out.print("새 제목 : ");
@@ -148,9 +148,9 @@ public class ArticleController extends Controller {
             for (int i = articles.size() - 1; i >= 0; i--) {
                 Article article = articles.get(i);
                 if (Util.getNow().split(" ")[0].equals(article.getRegDate().split(" ")[0])) {
-                    System.out.printf("  %d   /   %s      /   %s      /   %s   /   %s  \n", article.getId(), article.getAuthor(), article.getRegDate().split(" ")[1], article.getTitle(), article.getBody());
+                    System.out.printf("  %d   /   %s      /   %s      /   %s   /   %s  \n", article.getId(), article.getAuthor_name(), article.getRegDate().split(" ")[1], article.getTitle(), article.getBody());
                 } else {
-                    System.out.printf("  %d   /   %s      /   %s      /   %s   /   %s  \n", article.getId(), article.getAuthor(), article.getRegDate().split(" ")[0], article.getTitle(), article.getBody());
+                    System.out.printf("  %d   /   %s      /   %s      /   %s   /   %s  \n", article.getId(), article.getAuthor_name(), article.getRegDate().split(" ")[0], article.getTitle(), article.getBody());
                 }
             }
         }
@@ -173,9 +173,9 @@ public class ArticleController extends Controller {
             for (int i = selected_articles.size() - 1; i >= 0; i--) {
                 Article article = selected_articles.get(i);
                 if (Util.getNow().split(" ")[0].equals(article.getRegDate().split(" ")[0])) {
-                    System.out.printf("  %d   /   %s      /   %s      /   %s   /   %s  \n", article.getId(), article.getAuthor(), article.getRegDate().split(" ")[1], article.getTitle(), article.getBody());
+                    System.out.printf("  %d   /   %s      /   %s      /   %s   /   %s  \n", article.getId(), article.getAuthor_name(), article.getRegDate().split(" ")[1], article.getTitle(), article.getBody());
                 } else {
-                    System.out.printf("  %d   /   %s      /   %s      /   %s   /   %s  \n", article.getId(), article.getAuthor(), article.getRegDate().split(" ")[0], article.getTitle(), article.getBody());
+                    System.out.printf("  %d   /   %s      /   %s      /   %s   /   %s  \n", article.getId(), article.getAuthor_name(), article.getRegDate().split(" ")[0], article.getTitle(), article.getBody());
                 }
 
             }
@@ -193,6 +193,7 @@ public class ArticleController extends Controller {
             return;
         }
         System.out.println("번호 : " + foundArticle.getId());
+        System.out.println("작성자 : " + foundArticle.getAuthor_name() + "(" + foundArticle.getAuthor_id() + ")");
         System.out.println("작성날짜 : " + foundArticle.getRegDate());
         System.out.println("수정날짜 : " + foundArticle.getUpdateDate());
         System.out.println("제목 : " + foundArticle.getTitle());
@@ -221,7 +222,7 @@ public class ArticleController extends Controller {
             String title = "test0" + (i + 1);
             String body = "test0" + (i + 1);
 
-            Article article = new Article(id, regDate, updateDate, title, body, ("test0" + (i + 1)));
+            Article article = new Article(id, regDate, updateDate, title, body, ("test0" + (i + 1)), ("t0" + (i + 1)));
             articles.add(article);
 
             System.out.println(id + "번 글이 생성되었습니다");

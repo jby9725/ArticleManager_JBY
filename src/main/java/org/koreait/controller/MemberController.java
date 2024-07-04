@@ -52,6 +52,15 @@ public class MemberController extends Controller {
         String nickName = "";
         String re_loginPw = "";
 
+        //////////////////////////////////////
+        // 얘도 로그인 상태일 때에는 하지 않도록. //
+        //////////////////////////////////////
+
+//        if (loginState) {
+//            System.out.printf("이미 로그인이 되어있습니다. 아이디 : %s\n", nowLoginMember.getLoginId());
+//            return;
+//        }
+
         System.out.println("== 회원가입 ==");
         // 아이디 입력
         while (true) {
@@ -137,10 +146,10 @@ public class MemberController extends Controller {
         String loginId = "";
         String loginPw = "";
 
-        if (loginState) {
-            System.out.printf("이미 로그인이 되어있습니다. 아이디 : %s\n", nowLoginMember.getLoginId());
-            return;
-        }
+//        if (loginState) {
+//            System.out.printf("이미 로그인이 되어있습니다. 아이디 : %s\n", nowLoginMember.getLoginId());
+//            return;
+//        }
 
         System.out.print("아이디 : ");
         loginId = Container.getScanner().nextLine();
@@ -179,7 +188,7 @@ public class MemberController extends Controller {
     public void makeTestData() {
         System.out.println("== 멤버 테스트 데이터 추가 ==");
         for (int i = 0; i < 3; i++) {
-            Member member = new Member(++lastMemberID, Util.getNow(), ("test0" + i), ("test0" + i), ("test0" + i));
+            Member member = new Member(++lastMemberID, Util.getNow(), ("test0" + i), ("test0" + i), ("t0" + i));
             loginId_DB.add(("test0" + i));
             members.add(member);
         }
