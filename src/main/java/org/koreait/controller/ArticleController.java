@@ -2,6 +2,9 @@ package org.koreait.controller;
 
 import org.koreait.ArticleManager.Container;
 import org.koreait.dto.Article;
+import org.koreait.dto.Member;
+import org.koreait.service.ArticleService;
+import org.koreait.service.MemberService;
 import org.koreait.util.Util;
 
 import java.util.ArrayList;
@@ -10,11 +13,19 @@ import java.util.List;
 public class ArticleController extends Controller {
 
     private int lastArticleId = 0;
-    private List<Article> articles;
     private String cmd;
 
+//    private List<Article> articles;
+    private List<Member> members;
+
+    private ArticleService articleService;
+    private MemberService memberService;
+
     public ArticleController() {
-        articles = Container.articleDao.articles;
+        // articles = Container.articleDao.articles;
+        this.articleService = Container.articleService;
+        this.memberService = Container.memberService;
+        members = memberService.getMembers();
     }
 
     @Override
@@ -55,7 +66,8 @@ public class ArticleController extends Controller {
         String body = Container.getScanner().nextLine();
 
         Article article = new Article(id, regDate, updateDate, title, body, getUser().getLoginId(), getUser().getNickName());
-        articles.add(article);
+//        articles.add(article);
+        articleService.add(article);
         System.out.println(id + "번 글이 생성되었습니다");
     }
 
@@ -71,7 +83,8 @@ public class ArticleController extends Controller {
         }
 
         if (foundArticle.getAuthorId().equals(getUser().getLoginId())) {
-            articles.remove(foundArticle);
+//            articles.remove(foundArticle);
+            articleService.delete(foundArticle);
             System.out.println(id + "번 게시글이 삭제되었습니다");
         } else {
             System.out.println("해당 게시글을 작성한 사람만 삭제할 수 있습니다.");
@@ -125,11 +138,13 @@ public class ArticleController extends Controller {
     private void list_all() {
         System.out.println("== 게시글 목록 ==");
 
-        if (articles.isEmpty()) {
+        List<Article> articles = articleService.getArticles();
+
+        if (articleService.getSize() == 0){ // articles.isEmpty()) {
             System.out.println("게시글이 아무것도 없어요");
         } else {
             System.out.println("  번호   /    작성자   /    날짜   /   제목   /   내용   ");
-            for (int i = articles.size() - 1; i >= 0; i--) {
+            for (int i = articleService.getSize() - 1; i >= 0; i--) { // for (int i = articles.size() - 1; i >= 0; i--) {
                 Article article = articles.get(i);
                 if (Util.getNow().split(" ")[0].equals(article.getRegDate().split(" ")[0])) {
                     System.out.printf("  %d   /   %s      /   %s      /   %s   /   %s  \n", article.getId(), article.getAuthorName(), article.getRegDate().split(" ")[1], article.getTitle(), article.getBody());
@@ -143,6 +158,7 @@ public class ArticleController extends Controller {
     private void list_selected(String option) {
 
         List<Article> selected_articles = new ArrayList<>();
+        List<Article> articles = articleService.getArticles();
 
         for (Article article : articles) {
             if (article.getTitle().contains(option)) {
@@ -186,6 +202,7 @@ public class ArticleController extends Controller {
 
     private Article found_article(int id) {
         Article foundArticle = null;
+        List<Article> articles = ArticleService.getArticles();
 
         for (Article article : articles) {
             if (article.getId() == id) {
@@ -207,7 +224,9 @@ public class ArticleController extends Controller {
             String body = "test0" + (i + 1);
 
             Article article = new Article(id, regDate, updateDate, title, body, ("test0" + (i + 1)), ("t0" + (i + 1)));
-            articles.add(article);
+
+            articleService.add(article);
+            // articles.add(article);
 
             System.out.println(id + "번 글이 생성되었습니다");
             lastArticleId++;
