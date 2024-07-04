@@ -32,5 +32,6 @@
     - 원래 목표 구조상 App / Controller / Service / Dao / DB 인데, App과 Controller만 있는 상태였다.
     - 게시글과 회원 정보는 각각 ArticleController 와 MemberController 에게 종속되어 있는 상태였다.
     - 이 종속성을 해결해주기 위해 원래 있던 Container 클래스에 Article, Member의 저장소를 옮겨주었다.
-
+15. Service 도입, 역할분담
+    - 목표 구조 중 Service를 도입하였고 그에 따라 코드 내 데이터 전달 방식을 변경하였다.
 
