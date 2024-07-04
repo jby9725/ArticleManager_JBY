@@ -9,16 +9,13 @@ public class Article {
     private String body;
     private String author;
 
-    public Article(int id, String regDate, String updateDate, String title, String body) {
+    public Article(int id, String regDate, String updateDate, String title, String body, String author) {
         this.id = id;
         this.regDate = regDate;
         this.updateDate = updateDate;
         this.title = title;
         this.body = body;
-    }
-
-    public String getRegDate() {
-        return regDate;
+        this.author = author;
     }
 
     public String getUpdateDate() {
@@ -27,6 +24,10 @@ public class Article {
 
     public void setUpdateDate(String updateDate) {
         this.updateDate = updateDate;
+    }
+
+    public String getRegDate() {
+        return regDate;
     }
 
     public void setRegDate(String regDate) {
@@ -56,4 +57,13 @@ public class Article {
     public void setBody(String body) {
         this.body = body;
     }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
 }
