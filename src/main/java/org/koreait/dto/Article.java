@@ -7,6 +7,7 @@ public class Article {
     private String updateDate;
     private String title;
     private String body;
+    private String author;
 
     public Article(int id, String regDate, String updateDate, String title, String body) {
         this.id = id;

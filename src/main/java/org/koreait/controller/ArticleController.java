@@ -1,6 +1,8 @@
 package org.koreait.controller;
 
 import org.koreait.Container;
+import org.koreait.User;
+
 import org.koreait.dto.Article;
 import org.koreait.util.Util;
 
@@ -10,8 +12,12 @@ import java.util.List;
 public class ArticleController extends Controller {
 
     private int lastArticleId = 0;
-    private List<Article> articles = new ArrayList<>();
+    private List<Article> articles;
     private String cmd;
+
+    public ArticleController(){
+        articles = new ArrayList<>();
+    }
 
     @Override
     public void doAction(String cmd, String actionMethodName) {
@@ -42,6 +48,10 @@ public class ArticleController extends Controller {
     private void write() {
         System.out.println("== 게시글 작성 ==");
 
+        if(User.getUser() == null){
+            System.out.println("로그인을 해야만 게시글을 작성할 수 있습니다.");
+            return;
+        }
         int id = ++lastArticleId;
         String regDate = Util.getNow();
         String updateDate = regDate;
@@ -53,7 +63,6 @@ public class ArticleController extends Controller {
         Article article = new Article(id, regDate, updateDate, title, body);
         articles.add(article);
         System.out.println(id + "번 글이 생성되었습니다");
-
     }
 
     private void delete(String cmd) {

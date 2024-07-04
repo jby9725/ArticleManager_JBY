@@ -1,6 +1,8 @@
 package org.koreait.controller;
 
 import org.koreait.Container;
+import org.koreait.User;
+
 import org.koreait.dto.Member;
 import org.koreait.util.Util;
 
@@ -13,7 +15,7 @@ public class MemberController extends Controller {
 
     private List<String> loginId_DB;
 
-    private String nowLoginId;
+    private Member nowLoginMember;
     private boolean loginState;
 
     private String cmd;
@@ -22,6 +24,7 @@ public class MemberController extends Controller {
         members = new ArrayList<Member>();
         loginId_DB = new ArrayList<>();
         lastMemberID = 0;
+        nowLoginMember = null;
         loginState = false;
     }
 
@@ -136,7 +139,7 @@ public class MemberController extends Controller {
         String loginPw = "";
 
         if (loginState) {
-            System.out.printf("이미 로그인이 되어있습니다. 아이디 : %s\n", nowLoginId);
+            System.out.printf("이미 로그인이 되어있습니다. 아이디 : %s\n", nowLoginMember.getLoginId());
             return;
         }
 
@@ -146,11 +149,18 @@ public class MemberController extends Controller {
         loginPw = Container.getScanner().nextLine();
 
         for (Member member : members) {
-            if (member.getLoginId().equals(loginId) && member.getLoginPw().equals(loginPw)) {
-                System.out.printf("%s 로 로그인 하였습니다.\n", member.getLoginId());
-                this.nowLoginId = member.getLoginId();
-                this.loginState = true;
-                return;
+            if (member.getLoginId().equals(loginId)) {
+                if (member.getLoginPw().equals(loginPw)) {
+                    System.out.printf("%s 로 로그인 하였습니다.\n", member.getLoginId());
+                    nowLoginMember = member;
+                    User.setUser(member);
+                    loginState = true;
+                    return;
+                }
+                else {
+                    System.out.println("비밀번호가 틀렸습니다.");
+                    return;
+                }
             }
         }
         System.out.println("해당 정보를 가지고 있는 회원은 없습니다.");
@@ -160,9 +170,10 @@ public class MemberController extends Controller {
         if (!loginState) {
             System.out.println("현재 로그인 중인 계정이 없습니다.");
         } else {
-            System.out.printf("%s 계정에서 로그아웃 합니다.\n", nowLoginId);
+            System.out.printf("%s 계정에서 로그아웃 합니다.\n", nowLoginMember.getLoginId());
+            User.setUser(null);
             loginState = false;
-            nowLoginId = "";
+            nowLoginMember = null;
         }
     }
 
