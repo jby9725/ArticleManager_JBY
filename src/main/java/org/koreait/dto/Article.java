@@ -7,17 +7,17 @@ public class Article {
     private String updateDate;
     private String title;
     private String body;
-    private String author_id;
-    private String author_name;
+    private String authorId;
+    private String authorName;
 
-    public Article(int id, String regDate, String updateDate, String title, String body,String author_id, String author_name) {
+    public Article(int id, String regDate, String updateDate, String title, String body, String authorId, String authorName) {
         this.id = id;
         this.regDate = regDate;
         this.updateDate = updateDate;
         this.title = title;
         this.body = body;
-        this.author_id = author_id;
-        this.author_name = author_name;
+        this.authorId = authorId;
+        this.authorName = authorName;
     }
 
     public String getUpdateDate() {
@@ -60,20 +60,20 @@ public class Article {
         this.body = body;
     }
 
-    public String getAuthor_id() {
-        return author_id;
+    public String getAuthorId() {
+        return authorId;
     }
 
-    public void setAuthor_id(String author_id) {
-        this.author_id = author_id;
+    public void setAuthorId(String authorId) {
+        this.authorId = authorId;
     }
 
-    public String getAuthor_name() {
-        return author_name;
+    public String getAuthorName() {
+        return authorName;
     }
 
-    public void setAuthor_name(String author_name) {
-        this.author_name = author_name;
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
     }
 
 }

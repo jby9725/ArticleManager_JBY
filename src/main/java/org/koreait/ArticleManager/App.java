@@ -1,7 +1,6 @@
 package org.koreait.ArticleManager;
 
 import org.koreait.Container;
-import org.koreait.User;
 import org.koreait.controller.ArticleController;
 import org.koreait.controller.Controller;
 import org.koreait.controller.MemberController;
@@ -51,7 +50,7 @@ public class App {
                 case "article/delete":
                 case "article/modify":
                 case "member/logout":
-                    if (User.getUser() == null) {
+                    if (Controller.getUser() == null) {
                         System.out.println("로그인 필요");
                         continue;
                     }
@@ -61,7 +60,7 @@ public class App {
             switch (forLoginCheck) {
                 case "member/login":
                 case "member/join":
-                    if (User.getUser() != null) {
+                    if (Controller.getUser() != null) {
                         System.out.println("로그아웃 필요");
                         continue;
                     }

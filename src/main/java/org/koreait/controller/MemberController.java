@@ -1,7 +1,6 @@
 package org.koreait.controller;
 
 import org.koreait.Container;
-import org.koreait.User;
 import org.koreait.dto.Member;
 import org.koreait.util.Util;
 
@@ -161,7 +160,7 @@ public class MemberController extends Controller {
                 if (member.getLoginPw().equals(loginPw)) {
                     System.out.printf("%s 로 로그인 하였습니다.\n", member.getLoginId());
                     nowLoginMember = member;
-                    User.setUser(member);
+                    setUser(member);
                     loginState = true;
                     return;
                 }
@@ -179,7 +178,7 @@ public class MemberController extends Controller {
             System.out.println("현재 로그인 중인 계정이 없습니다.");
         } else {
             System.out.printf("%s 계정에서 로그아웃 합니다.\n", nowLoginMember.getLoginId());
-            User.setUser(null);
+            setUser(null);
             loginState = false;
             nowLoginMember = null;
         }
